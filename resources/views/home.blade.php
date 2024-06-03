@@ -78,12 +78,12 @@
             </div>
 
             <div class="col-lg-6">
-                <a href="">
+                <a href="https://github.com/fathulfahmy/local-library" target="_blank">
                     <div class="card bg-primary text-white">
                         <div class="card-body">
                             <h5 class="card-title text-center h1 text-white">GitHub</h5>
                             <div class="text-center">
-                                <i class="bi bi-journal-text h1"></i>
+                                <i class="bi bi-github h1"></i>
                             </div>
                         </div>
                     </div>
