@@ -22,13 +22,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 // website visitors need to login to access all features
 Route::middleware(['auth'])->group(function () {
     // route for all resource controllers
     Route::resource('/supervisor', SupervisorController::class);
     Route::resource('/volunteer', VolunteerController::class);
-    Route::resource('/member', MemberController::class);
     Route::resource('/book', BookController::class);
+    Route::resource('/member', MemberController::class);
     Route::resource('/loan', LoanController::class);
+    Route::get('/search', [LoanController::class, 'search'])->name('loan.search');
 });
