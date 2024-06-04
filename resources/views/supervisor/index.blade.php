@@ -18,7 +18,7 @@
                 <h5 class="card-title">Showing all supervisors</h5>
                 <table class="table table-striped">
                     <tr>
-                        <th>ID</th>
+                        <th>Sup. ID</th>
                         <th>Name</th>
                         <th>Email</th>
                     </tr>

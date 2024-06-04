@@ -20,12 +20,13 @@
                 <h5 class="card-title">Showing all members</h5>
                 <table class="table table-striped">
                     <tr>
-                        <th>ID</th>
+                        <th>Mem. ID</th>
                         <th>Name</th>
                         <th>IC</th>
                         <th>Phone</th>
                         <th>Address</th>
                         <th>Contact</th>
+                        <th>Action</th>
                     </tr>
                     @foreach ($members as $member)
                         <tr>
@@ -35,6 +36,8 @@
                             <td>{{ $member->phone }}</td>
                             <td>{{ $member->address }}</td>
                             <td>{{ $member->email }}</td>
+                            <td><a href="{{ route('member.show', $member) }}" class="btn btn-primary">Show</a>
+                            </td>
                         </tr>
                     @endforeach
                 </table>

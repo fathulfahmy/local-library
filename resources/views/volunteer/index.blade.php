@@ -22,7 +22,7 @@
                 <h5 class="card-title">Showing all volunteers</h5>
                 <table class="table table-striped">
                     <tr>
-                        <th>ID</th>
+                        <th>Vol. ID</th>
                         <th>Name</th>
                         <th>Email</th>
                     </tr>
