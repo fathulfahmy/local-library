@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Loan;
+use App\Models\Member;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,31 @@ class LoanController extends Controller
     public function index()
     {
         return view('loan.index', [
+            'title' => 'Showing all active loans',
             'loans' => Loan::whereNull('returnDate')->paginate(25),
-            'records' => Loan::whereNotNull('returnDate')->paginate(25),
+            'records' => Loan::whereNotNull('returnDate')->orderBy('id', 'DESC')->paginate(25),
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $result = Loan::whereNull('returnDate')->whereAny(['book_id', 'member_icNum'], '=', "$request->searchkey")->paginate(25);
+        $loans = Loan::whereNull('returnDate')->paginate(25);
+        $records = Loan::whereNotNull('returnDate')->orderBy('id', 'DESC')->paginate(25);
+
+        if ($result->count() <= 0) {
+            return view('loan.index', [
+                'title' => 'No results found for ' . $request->searchkey,
+                'loans' => $loans,
+                'records' => $records
+            ]);
+        } else {
+            return view('loan.index', [
+                'title' => 'Showing results for ' . $request->searchkey,
+                'loans' => $result,
+                'records' => $records
+            ]);
+        }
     }
 
     /**
@@ -33,10 +56,12 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
+        $member = Member::find($request->member_id);
         // create new loan
         Loan::create([
             'book_id' => $request->book_id,
-            'member_id' => $request->member_id,
+            'member_id' => $member->id,
+            'member_icNum' => $member->icNum,
             'borrowingDate' => Carbon::parse($request->borrowingDate)->format('d/m/Y')
         ]);
 
@@ -78,7 +103,7 @@ class LoanController extends Controller
         $book->available = "Yes";
         $book->save();
 
-        return redirect(route('loan.index'));
+        return back();
     }
 
     /**

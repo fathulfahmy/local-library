@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Member;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,11 @@ class LoanFactory extends Factory
      */
     public function definition(): array
     {
+        $member = Member::find(fake()->numberBetween(1, 50));
         return [
             'book_id' => fake()->numberBetween(1, 300),
-            'member_id' => fake()->numberBetween(1, 50),
+            'member_id' => $member->id,
+            'member_icNum' => $member->icNum,
             // borrow from january untill february
             'borrowingDate' => fake()->dateTimeBetween('2024-01-01', '2024-02-01')->format('d/m/Y'),
             // return from march untill april
