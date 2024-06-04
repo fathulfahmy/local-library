@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Loan;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,11 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
-        //
+        return view('member.show', [
+            'member' => $member,
+            'loans' => Loan::where('member_id', '=', $member->id)->whereNull('returnDate')->paginate(25),
+            'records' => Loan::where('member_id', '=', $member->id)->whereNotNull('returnDate')->orderBy('id', 'DESC')->paginate(25),
+        ]);
     }
 
     /**
