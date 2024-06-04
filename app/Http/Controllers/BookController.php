@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Loan;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -49,7 +50,11 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return view('book.show', [
+            'book' => $book,
+            'loans' => Loan::where('book_id', '=', $book->id)->whereNull('returnDate')->paginate(25),
+            'records' => Loan::where('book_id', '=', $book->id)->whereNotNull('returnDate')->orderBy('id', 'DESC')->paginate(25),
+        ]);
     }
 
     /**
