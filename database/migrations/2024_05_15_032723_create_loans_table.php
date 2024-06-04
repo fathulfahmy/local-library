@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('book_id')->constrained();
             $table->foreignId('member_id')->constrained();
+            $table->string('member_icNum');
             $table->string('borrowingDate');
             $table->string('returnDate')->nullable();
             $table->timestamps();
