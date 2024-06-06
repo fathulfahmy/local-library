@@ -57,18 +57,24 @@ class LoanController extends Controller
     public function store(Request $request)
     {
         $member = Member::find($request->member_id);
-        // create new loan
-        Loan::create([
-            'book_id' => $request->book_id,
-            'member_id' => $member->id,
-            'member_icNum' => $member->icNum,
-            'borrowingDate' => Carbon::parse($request->borrowingDate)->format('d/m/Y')
-        ]);
-
-        // update book availability
         $book = Book::find($request->book_id);
-        $book->available = "No";
-        $book->save();
+
+        if ($book->available == "Yes") {
+            // create new loan
+            Loan::create([
+                'book_id' => $request->book_id,
+                'member_id' => $member->id,
+                'member_icNum' => $member->icNum,
+                'borrowingDate' => Carbon::parse($request->borrowingDate)->format('d/m/Y')
+            ]);
+            // update book availability
+            $book->available = "No";
+            $book->save();
+        } else {
+            // throw error
+            return back()->withInput($request->input());
+        }
+
 
         return redirect(route('loan.index'));
     }
