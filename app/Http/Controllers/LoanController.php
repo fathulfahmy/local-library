@@ -72,7 +72,7 @@ class LoanController extends Controller
             $book->save();
         } else {
             // throw error
-            return back()->withInput($request->input());
+            return view('error.error-book');
         }
 
 

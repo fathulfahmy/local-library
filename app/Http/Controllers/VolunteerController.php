@@ -27,7 +27,7 @@ class VolunteerController extends Controller
         if (Gate::allows('create-volunteers', User::class)) {
             return view('volunteer.create');
         } else {
-            abort(403);
+            return view('error.error-403');
         }
     }
 
@@ -48,7 +48,7 @@ class VolunteerController extends Controller
             ]);
             return redirect(route('volunteer.index'));
         } else {
-            abort(403);
+            return view('error.error-403');
         }
     }
 
